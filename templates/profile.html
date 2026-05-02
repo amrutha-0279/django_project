@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    body {
+        background: #f4f7fe;
+    }
+
+    .profile-container {
+        max-width: 750px;
+        margin: 50px auto;
+    }
+
+    .profile-card {
+        background: #fff;
+        border-radius: 18px;
+        padding: 35px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+
+    .profile-header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .profile-img-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+
+    .profile-img {
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #1e90ff;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .profile-img:hover {
+        opacity: 0.85;
+    }
+
+    .edit-icon {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        background: #1e90ff;
+        color: white;
+        border-radius: 50%;
+        padding: 6px;
+        font-size: 12px;
+    }
+
+    h2 {
+        color: #0b2c5a;
+        margin-top: 10px;
+    }
+
+    .form-row {
+        display: flex;
+        gap: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+        width: 100%;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 11px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        transition: 0.3s;
+    }
+
+    .form-control:focus {
+        border-color: #1e90ff;
+        outline: none;
+        box-shadow: 0 0 5px rgba(30,144,255,0.3);
+    }
+
+    .btn-save {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(135deg, #0b2c5a, #1e90ff);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    .btn-save:hover {
+        opacity: 0.9;
+    }
+
+    .btn-back {
+        display: block;
+        text-align: center;
+        margin-top: 15px;
+        text-decoration: none;
+        color: #1e90ff;
+        font-weight: 500;
+    }
+
+    .success {
+        color: green;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="profile-container">
+    <div class="profile-card">
+
+        <div class="profile-header">
+            <div class="profile-img-wrapper">
+                <label for="photoInput">
+                    {% if student.photo %}
+                        <img src="{{ student.photo.url }}" class="profile-img" id="preview">
+                    {% else %}
+                        <img src="{% static 'images/user.png' %}" class="profile-img" id="preview">
+                    {% endif %}
+                </label>
+                <span class="edit-icon">✎</span>
+            </div>
+
+            <h2>My Profile</h2>
+        </div>
+
+        {% if success %}
+            <p class="success">Profile updated successfully!</p>
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <input type="file" name="photo" id="photoInput" hidden onchange="previewImage(event)">
+
+            <div class="form-row">
+                <div class="form-group">
+                    <input type="text" name="name" value="{{ student.name }}" placeholder="Full Name" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <input type="email" name="email" value="{{ student.email }}" placeholder="Email" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="text" name="phone" value="{{ student.phone }}" placeholder="Phone Number" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <textarea name="address" placeholder="Address" class="form-control">{{ student.address }}</textarea>
+            </div>
+
+            <button type="submit" class="btn-save">Save Changes</button>
+
+            <a href="{% url 'dashboard' %}" class="btn-back">← Back to Dashboard</a>
+        </form>
+
+    </div>
+</div>
+
+<script>
+function previewImage(event) {
+    const reader = new FileReader();
+    reader.onload = function(){
+        document.getElementById('preview').src = reader.result;
+    }
+    reader.readAsDataURL(event.target.files[0]);
+}
+</script>
+
+{% endblock %}

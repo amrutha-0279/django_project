@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SCOPE INDIA</title>
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #f5f7fb;
+        }
+        p{
+            color:blue
+        }
+
+        /* HEADER (hidden on home) */
+        .logo {
+            text-align: center;
+            padding: 15px;
+            background: white;
+        }
+
+        .logo img {
+            height: 80px;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            padding: 14px;
+            transition: 0.3s;
+        }
+
+        /* Transparent on home */
+        .navbar.home {
+            background: transparent;
+            position: absolute;
+            width: 100%;
+        }
+
+        /* Normal navbar (other pages or after scroll) */
+        .navbar.scrolled {
+            background: #0b2c5a;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .navbar a:hover {
+            color: #f4b400;
+        }
+
+        .navbar a.active {
+            color: #f4b400;
+        }
+
+        .navbar a.active::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: #f4b400;
+            left: 0;
+            bottom: -5px;
+        }
+
+        /* CONTENT */
+        .content {
+            min-height: 80vh;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: #0b2c5a;
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+<!-- NAVBAR -->
+<div class="navbar {% if request.path == '/' %}home{% else %}scrolled{% endif %}" id="navbar">
+    <!-- <a href="/home" class="{% if request.path == '/' %}active{% endif %}">HOME</a>
+    <a href="/about/" class="{% if 'about' in request.path %}active{% endif %}">ABOUT</a>
+    <a href="/contact/" class="{% if 'contact' in request.path %}active{% endif %}">CONTACT</a>
+    <a href="/register/" class="{% if 'register' in request.path %}active{% endif %}">REGISTER</a>
+    <a href="/login/" class="{% if 'login' in request.path %}active{% endif %}">LOGIN</a> -->
+    <a href="{% url 'home' %}">HOME</a>
+<a href="{% url 'about' %}">ABOUT</a>
+<a href="{% url 'contact' %}">CONTACT</a>
+<a href="{% url 'register' %}">REGISTRATION</a>
+<a href="{% url 'login' %}">LOGIN</a>
+</div>
+{% if request.path != '/' %}
+<div class="logo">
+    <img src="{% static 'images/logo.webp' %}" alt="Scope India Logo" width="10%">
+</div>
+{% endif %}
+
+
+<!-- CONTENT -->
+<div class="content">
+    {% block content %}{% endblock %}
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    © 2026 SCOPE INDIA | All Rights Reserved
+</div>
+
+
+<script>
+    //window.addEventListener("scroll", function() {
+        //const navbar = document.getElementById("navbar");
+        //if (window.scrollY > 50) {
+          //  navbar.classList.add("scrolled");
+        //} else {
+          //  {% if request.path == '/' %}
+            //navbar.classList.remove("scrolled");
+            //{% endif %}
+       // }
+    //});
+</script>
+
+</body>
+</html>
+    
+

@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    body {
+        background: #f6f9ff;
+    }
+
+    /* LAYOUT */
+    .dashboard {
+        display: flex;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+        width: 230px;
+        min-height: 100vh;
+        background: #0b2c5a;
+        padding: 20px;
+        color: white;
+        position: fixed;
+    }
+
+    .sidebar h2 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .sidebar a {
+        display: block;
+        color: white;
+        text-decoration: none;
+        padding: 12px;
+        margin: 6px 0;
+        border-radius: 8px;
+        transition: 0.3s;
+    }
+
+    .sidebar a:hover {
+        background: white;
+        color: #0b2c5a;
+    }
+
+    /* MAIN */
+    .main {
+        margin-left: 250px;
+        padding: 25px;
+        width: 100%;
+    }
+
+    /* TOP BAR */
+    .topbar {
+        background: white;
+        padding: 18px;
+        border-radius: 12px;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .welcome {
+        font-size: 22px;
+        font-weight: bold;
+        color: #0b2c5a;
+    }
+
+    /* CARDS */
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 18px;
+        margin-top: 25px;
+    }
+
+    .card {
+        background: white;
+        padding: 25px;
+        border-radius: 14px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+        border-left: 5px solid #0b2c5a;
+        transition: 0.3s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card i {
+        font-size: 28px;
+        color: #0b2c5a;
+        margin-bottom: 10px;
+    }
+
+    .card h3 {
+        margin: 0;
+        color: #0b2c5a;
+    }
+
+    .card p {
+        color: #666;
+        font-size: 14px;
+    }
+
+    /* BUTTONS */
+    .btn {
+        display: inline-block;
+        margin: 10px 8px 0 0;
+        padding: 12px 16px;
+        background: #0b2c5a;
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+    }
+
+    .btn:hover {
+        background: #061a36;
+    }
+
+    /* BOX */
+    .box {
+        margin-top: 20px;
+        background: white;
+        padding: 18px;
+        border-radius: 12px;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    }
+</style>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h2>🎓 Panel</h2>
+
+        <a href="/student/dashboard/">🏠 Dashboard</a>
+        <a href="{% url 'courses' %}">📚 Courses</a>
+        <a href="/student/my-courses/">📖 My Courses</a>
+        <a href="/student/profile/">👤 Profile</a>
+        <a href="/student/change-password/">🔐 Password</a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+
+        <!-- TOPBAR -->
+        <div class="topbar">
+            <div class="welcome">
+                Welcome, {{ student.first_name }}
+            </div>
+
+            <a href="/accounts/logout/" class="btn">Logout</a>
+        </div>
+
+        <!-- WELCOME BOX -->
+        <div class="box">
+            <h3 style="color:#0b2c5a;">Start Your Learning Journey </h3>
+            <p style="color:#666;">Explore courses and grow your skills.</p>
+        </div>
+
+        <!-- CARDS -->
+        <div class="cards">
+
+            <div class="card">
+                <i class="fa fa-book"></i>
+                <h3>Courses</h3>
+                <p>Explore all courses</p>
+            </div>
+
+            <div class="card">
+                <i class="fa fa-check"></i>
+                <h3>My Courses</h3>
+                <p>Your learning list</p>
+            </div>
+
+            <div class="card">
+                <i class="fa fa-user"></i>
+                <h3>Profile</h3>
+                <p>View & update details</p>
+            </div>
+
+            <div class="card">
+                <i class="fa fa-lock"></i>
+                <h3>Security</h3>
+                <p>Change password</p>
+            </div>
+
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <div style="margin-top:25px;">
+            <a class="btn" href="/student/courses/">Browse Courses</a>
+            <a class="btn" href="/student/my-courses/">My Courses</a>
+            <a class="btn" href="/student/profile/">Edit Profile</a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

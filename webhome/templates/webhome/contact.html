@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.container{
+    position:relative;
+}
+
+.container img{
+    width:100%;
+    display:block;
+}
+
+/* FORM */
+.form-box{
+    position:absolute;
+    top:70px;
+    right:50px;
+    width:320px;
+    background:#fff;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* CLOSE BUTTON */
+.close-btn{
+    position:absolute;
+    top:-10px;
+    right:-10px;
+    background:#fff;
+    border-radius:50%;
+    width:30px;
+    height:30px;
+    text-align:center;
+    line-height:30px;
+    cursor:pointer;
+    box-shadow:0 3px 10px rgba(0,0,0,0.2);
+}
+
+.close-btn:hover{
+    background:red;
+    color:white;
+}
+
+/* FORM INPUTS */
+input, textarea{
+    width:100%;
+    padding:10px;
+    margin-bottom:12px;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    background:orange;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#ff8c00;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+    .form-box{
+        position:static;
+        margin:20px;
+        width:auto;
+    }
+}
+</style>
+
+<div class="container">
+
+    <!-- IMAGE -->
+    <img src="{% static 'images/contactimage.png' %}" alt="contact">
+
+    <!-- FORM -->
+    <div class="form-box" id="formBox">
+
+        <div class="close-btn" onclick="closeForm()">✖</div>
+
+        <h3>Send Message</h3>
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <input type="text" name="subject" placeholder="Subject">
+            <textarea rows="4" name="message" placeholder="Your Message"></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+function closeForm(){
+    document.getElementById("formBox").style.display="none";
+}
+</script>
+
+{% endblock %}

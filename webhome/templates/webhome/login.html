@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+        background: #f5f7fb;
+    }
+
+    .login-box {
+        display: flex;
+        width: 900px;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    /* LEFT SIDE IMAGE */
+    .login-left {
+        width: 50%;
+        background: url("{% static 'images/login.jpg' %}") no-repeat center;
+        background-size: cover;
+    }
+
+    /* RIGHT SIDE FORM */
+    .login-right {
+        width: 50%;
+        padding: 40px;
+    }
+
+    .login-right h2 {
+        color: #0b2c5a;
+        margin-bottom: 10px;
+    }
+
+    .login-right p {
+        color: #666;
+        margin-bottom: 20px;
+    }
+
+    .login-right input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        outline: none;
+    }
+
+    .login-right input:focus {
+        border-color: #f4b400;
+    }
+
+    .btn-login {
+        width: 100%;
+        padding: 12px;
+        background: #0b2c5a;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .btn-login:hover {
+        background: #f4b400;
+        color: black;
+    }
+
+    .extra {
+        margin-top: 15px;
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+    }
+
+    .extra a {
+        text-decoration: none;
+        color: #0b2c5a;
+    }
+
+    .extra a:hover {
+        color: #f4b400;
+    }
+
+    .msg {
+        color: red;
+        margin-bottom: 10px;
+    }
+
+    /* MOBILE */
+    @media(max-width:768px){
+        .login-box {
+            flex-direction: column;
+            width: 90%;
+        }
+
+        .login-left {
+            height: 200px;
+            width: 100%;
+        }
+
+        .login-right {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="login-container">
+    <div class="login-box">
+
+        <!-- LEFT IMAGE -->
+        <div class="login-left"></div>
+
+        <!-- RIGHT FORM -->
+        <div class="login-right">
+            <h2>Welcome Back 👋</h2>
+            <p>Login to continue your learning journey</p>
+
+            {% if msg %}
+                <div class="msg">{{ msg }}</div>
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <input type="email" name="email" placeholder="Email Address" required>
+                <input type="password" name="password" placeholder="Password" required>
+
+                <label>
+                    <input type="checkbox" name="remember"> Remember Me
+                </label>
+
+                <br><br>
+
+                <button type="submit" class="btn-login">Login</button>
+            </form>
+
+            <div class="extra">
+                <a href="/forgot/">Forgot Password?</a>
+                <a href="/register/">Create Account</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

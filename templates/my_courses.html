@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    body {
+        background: #f6f9ff;
+    }
+
+    .header {
+        background: linear-gradient(135deg, #0b2c5a, #1e90ff);
+        color: white;
+        padding: 28px;
+        border-radius: 12px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 25px;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 22px;
+    }
+
+    .card {
+        background: white;
+        border-radius: 16px;
+        padding: 22px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+        border-top: 4px solid #1e90ff;
+        transition: 0.3s;
+    }
+
+    .card:hover {
+        transform: translateY(-6px);
+    }
+
+    .badge {
+        background: #28a745;
+        color: white;
+        padding: 5px 10px;
+        font-size: 12px;
+        border-radius: 8px;
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+
+    .title {
+        font-size: 20px;
+        color: #0b2c5a;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    .desc {
+        font-size: 14px;
+        color: #444;
+        line-height: 1.6;
+        background: #f4f8ff;
+        padding: 12px;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+
+    .info {
+        font-size: 13px;
+        color: #555;
+        margin-top: 8px;
+    }
+
+    .btn {
+        display: inline-block;
+        margin-top: 12px;
+        padding: 10px 14px;
+        background: #0b2c5a;
+        color: white;
+        border-radius: 10px;
+        text-decoration: none;
+        font-size: 13px;
+    }
+
+    .btn:hover {
+        background: #061a36;
+    }
+
+    .empty {
+        text-align: center;
+        margin-top: 60px;
+        color: #777;
+    }
+</style>
+
+<div class="container">
+    <div style="margin-bottom: 15px;">
+    <a href="{% url 'dashboard' %}" 
+       style="background:#0b2c5a; color:white; padding:10px 16px; 
+              border-radius:10px; text-decoration:none; display:inline-block;">
+        ⬅ Back to Dashboard
+    </a>
+</div>
+    <div class="header">
+        🎓 My Courses 
+    </div>
+
+    {% if enrollments %}
+
+    <div class="grid">
+
+        {% for e in enrollments %}
+        <div class="card">
+
+            <span class="badge">Enrolled</span>
+
+            <div class="title">{{ e.course.name }}</div>
+
+            <div class="info"><b>📅 Duration:</b> {{ e.course.duration }}</div>
+            <div class="info"><b>💰 Fee:</b> ₹{{ e.course.fee }}</div>
+
+            
+            <div class="desc">
+
+                {% if e.course.name == "Software Programming" %}
+                    Learn programming fundamentals, Python, Java, problem-solving, and real-world coding skills for software development.
+
+                {% elif e.course.name == "DevOps" %}
+                    Master CI/CD pipelines, Docker, Kubernetes, Git, automation tools, and cloud deployment techniques.
+
+                {% elif e.course.name == "Data Science & AI" %}
+                    Learn Python, Machine Learning, AI models, data analysis, visualization, and real-world predictive systems.
+
+                {% elif e.course.name == "Software Testing" %}
+                    Understand manual testing, automation testing, Selenium, test cases, and bug tracking systems.
+
+                {% elif e.course.name == "Data Analytics" %}
+                    Learn data cleaning, Excel, SQL, Power BI, dashboards, and business insights from data.
+
+                {% elif e.course.name == "Server Administration" %}
+                    Manage Linux/Windows servers, hosting, security, backups, and system performance tuning.
+
+                {% elif e.course.name == "Cloud Computing" %}
+                    Work with AWS, Azure, cloud storage, virtual machines, deployment, and scalable systems.
+
+                {% elif e.course.name == "Networking" %}
+                    Learn network protocols, routers, switches, TCP/IP, security, and infrastructure setup.
+
+                {% elif e.course.name == "Mobile App Development" %}
+                    Build Android & iOS apps using Flutter/React Native, UI design, and API integration.
+
+                {% elif e.course.name == "Digital Marketing" %}
+                    Master SEO, social media marketing, Google Ads, content strategy, and online branding.
+
+                {% else %}
+                    This course provides structured learning with practical projects, assignments, and career-oriented skills development.
+                {% endif %}
+
+            </div>
+
+            
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="empty">
+        <h3>No courses enrolled yet 😢</h3>
+        <p>Start learning today by enrolling in a course.</p>
+        <a href="/student/courses/" class="btn">Browse Courses</a>
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
